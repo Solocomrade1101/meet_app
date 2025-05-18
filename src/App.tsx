@@ -12,7 +12,7 @@ const App = () => {
     }, [])
 
     return (
-        <BrowserRouter>
+        <BrowserRouter basename="/meet_app/">
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/event/:id" element={<EventPage />} />
