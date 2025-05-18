@@ -1,1 +1,1 @@
-export type {Event} from './events'
+export type {IEvent} from './events'
