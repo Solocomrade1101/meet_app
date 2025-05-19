@@ -1,65 +1,128 @@
-import {type FC, useState} from "react";
-import s from './Sort.module.scss'
+import { type FC, useState } from "react";
+import s from './Sort.module.scss';
 import cn from 'classnames';
-import {DEFAULT_STATE} from "./constants";
-import {SortOpen} from "./components";
+import { SortOpen } from "./components";
+import type { Format, ISortProps, SortOrder } from "./interfaces";
 
-export const Sort:FC = () => {
-    const [filters, setFilters] = useState(DEFAULT_STATE);
+type FilterType = 'sortOrder' | 'format' | 'cities';
 
-    const handleToggle = (type: string) => {
-        setFilters(prev =>
-            prev.map(f =>
-                f.type === type ? { ...f, isOpen: true } : { ...f, isOpen: false }
-            )
-        );
+export const Sort: FC<ISortProps> = ({ filters, setFilters }) => {
+    const [activeFilter, setActiveFilter] = useState<FilterType | null>(null);
+
+    const handleOpen = (type: FilterType) => {
+        setActiveFilter(type);
     };
 
     const handleClose = () => {
-        setFilters(prev => prev.map(f => ({ ...f, isOpen: false })));
+        setActiveFilter(null);
     };
 
-    const activeFilter = filters.find(f => f.isOpen);
+    const handleSelect = (value: string | string[]) => {
+        setFilters(prev => {
+            if (activeFilter === 'sortOrder') {
+                return {
+                    ...prev,
+                    sortOrder: value as SortOrder,
+                };
+            }
+
+            if (activeFilter === 'format') {
+                // Для чекбоксов value будет массивом
+                const values = Array.isArray(value) ? value : [value];
+                return {
+                    ...prev,
+                    format: values as Format[],
+                };
+            }
+
+            if (activeFilter === 'cities') {
+                // Для чекбоксов value будет массивом
+                const values = Array.isArray(value) ? value : [value];
+                return {
+                    ...prev,
+                    cities: values,
+                };
+            }
+
+            return prev;
+        });
+    };
+
+    const filterData = {
+        sortOrder: {
+            title: 'Сортировка',
+            options: ['Сначала ближайшие', 'Сначала поздние'],
+            mod: 'radio' as const,
+        },
+        format: {
+            title: 'Формат',
+            options: ['Онлайн', 'Оффлайн'],
+            mod: 'checkbox' as const,
+        },
+        cities: {
+            title: 'Город',
+            options: ['Москва', 'Санкт-Петербург', 'Новосибирск'],
+            mod: 'checkbox' as const,
+        },
+    };
+
     return (
         <div className={s.container}>
             {activeFilter && (
                 <SortOpen
-                    title={activeFilter.title}
-                    data={activeFilter.data}
-                    mod={activeFilter.mod}
+                    title={filterData[activeFilter].title}
+                    data={filterData[activeFilter].options}
+                    mod={filterData[activeFilter].mod}
                     onClose={handleClose}
+                    onSelect={handleSelect}
+                    selected={
+                        activeFilter === 'sortOrder'
+                            ? filters.sortOrder
+                            : activeFilter === 'format'
+                                ? filters.format
+                                : filters.cities
+                    }
                 />
             )}
+
             <div className={s.buttons_block}>
                 <button className={cn(s.button, s.only_icon)}>
-                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                         xmlns="http://www.w3.org/2000/svg">
                         <path
                             d="M17 17L13.6164 13.6167M15.4455 9.22209C15.4455 12.6585 12.6595 15.4442 9.22276 15.4442C5.78603 15.4442 3 12.6585 3 9.22209C3 5.78572 5.78603 3 9.22276 3C12.6595 3 15.4455 5.78572 15.4455 9.22209Z"
-                            stroke="#F1F4F8" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
+                            stroke="#F1F4F8" strokeWidth="1.6" strokeLinecap="round"
+                            strokeLinejoin="round" />
                     </svg>
                 </button>
-                <button onClick={() => handleToggle("data")} className={s.button}>
+
+                <button onClick={() => handleOpen("sortOrder")} className={s.button}>
                     <span className={s.text}>Ближайшие</span>
-                    <svg width="16" height="20" viewBox="0 0 16 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M4 8L8 12L12 8" stroke="#F1F4F8" strokeWidth="1.6" strokeLinecap="round"
-                              strokeLinejoin="round"/>
+                    <svg width="16" height="20" viewBox="0 0 16 20" fill="none"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path d="M4 8L8 12L12 8" stroke="#F1F4F8" strokeWidth="1.6"
+                              strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                 </button>
-                <button onClick={() => handleToggle("format")} className={s.button}>
+
+                <button onClick={() => handleOpen("format")} className={s.button}>
                     <span className={s.text}>Формат</span>
-                    <svg width="16" height="20" viewBox="0 0 16 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M4 8L8 12L12 8" stroke="#F1F4F8" strokeWidth="1.6" strokeLinecap="round"
-                              strokeLinejoin="round"/>
+                    <svg width="16" height="20" viewBox="0 0 16 20" fill="none"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path d="M4 8L8 12L12 8" stroke="#F1F4F8" strokeWidth="1.6"
+                              strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                 </button>
-                <button onClick={() => handleToggle("city")} className={s.button}>
+
+                <button onClick={() => handleOpen("cities")} className={s.button}>
                     <span className={s.text}>Город</span>
-                    <svg width="16" height="20" viewBox="0 0 16 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M4 8L8 12L12 8" stroke="#F1F4F8" strokeWidth="1.6" strokeLinecap="round"
-                              strokeLinejoin="round"/>
+                    <svg width="16" height="20" viewBox="0 0 16 20" fill="none"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path d="M4 8L8 12L12 8" stroke="#F1F4F8" strokeWidth="1.6"
+                              strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                 </button>
             </div>
         </div>
-    )
-}
+    );
+};

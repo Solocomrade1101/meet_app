@@ -1,6 +1,8 @@
-export interface ISortOpenProps {
-    title: string
-    data: string[]
-    mod: string
-    onClose: () => void
+export interface SortOpenProps {
+    title: string;
+    data: string[];
+    mod: 'radio' | 'checkbox';
+    onClose: () => void;
+    onSelect: (value: string | string[]) => void;
+    selected: string | string[];
 }

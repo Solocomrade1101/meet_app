@@ -5,34 +5,76 @@ import {Sort} from "./components/Sort";
 import type {IEvent} from "../../types/events.ts";
 import { useNavigate } from 'react-router-dom'
 import {formatDateParts} from "../utils";
+import type {Filters} from "./Interfaces.ts";
 
 export const Home: React.FC = () => {
     const { events, loading, error } = useEvents()
     const [visiblePastEvents, setVisiblePastEvents] = useState(4)
     const navigate = useNavigate()
 
+    const [filters, setFilters] = useState<Filters>({
+        sortOrder: 'Сначала ближайшие',
+        format: [],
+        cities: []
+    });
+
+    console.log(filters)
     if (loading) return <div className={s.loader}>Загрузка...</div>
     if (error) return <div className={s.error}>Ошибка: {error}</div>
 
-    const now = new Date()
+    const now = new Date();
 
-    const futureEvents = events.filter((event: IEvent) => {
-        const eventDate = new Date(event.date)
-        return eventDate >= now
-    })
+// Сортировка событий по дате
+    const sortedEvents = [...events].sort((a, b) => {
+        const dateA = new Date(a.date[0]);
+        const dateB = new Date(b.date[0]);
+        return filters.sortOrder === 'Сначала ближайшие'
+            ? +dateA - +dateB : +dateB - +dateA
+    });
 
-    const pastEvents = events.filter((event: IEvent) => {
-        const eventDate = new Date(event.date)
-        return eventDate < now
-    })
+// Фильтрация событий по формату
+    const formatFilteredEvents = sortedEvents.filter(event => {
+        if (filters.format.length === 0) return true;
+
+        const isOnline = event.place.includes("Онлайн");
+
+        // Если выбраны оба варианта - показываем все события
+        if (filters.format.includes("Онлайн") && filters.format.includes("Оффлайн")) {
+            return true;
+        }
+
+        // Если выбран только онлайн - показываем онлайн события
+        if (filters.format.includes("Онлайн")) {
+            return isOnline;
+        }
+
+        // Если выбран только оффлайн - показываем оффлайн события
+        if (filters.format.includes("Оффлайн")) {
+            return !isOnline;
+        }
+
+        return true;
+    });
+
+// Фильтрация событий по городам
+    const cityFilteredEvents = formatFilteredEvents.filter(event => {
+        if (filters.cities.length === 0) return true;
+        return event.place.some(city => filters.cities.includes(city));
+    });
+
+// Разделение на будущие и прошедшие события
+    const futureEvents = cityFilteredEvents.filter(event => new Date(event.date[0]) >= now);
+    const pastEvents = cityFilteredEvents.filter(event => new Date(event.date[0]) < now);
+
 
 
     return (
         <div className={s.wrapper}>
-            <Sort/>
+            <Sort filters={filters}
+                  setFilters={setFilters}/>
             <div className={s.future_events}>
                 {futureEvents.map((event: IEvent) => {
-                    const {day, weekday} = formatDateParts(event.date)
+                    const {day, weekday} = formatDateParts(event.date[0])
                     return (
                         <div key={event.id} className={s.event} onClick={() => navigate(`/event/${event.id}`)}>
                             <div className={s.data}>
@@ -66,7 +108,7 @@ export const Home: React.FC = () => {
             <h2 className={s.last_title}>Прошедшие события</h2>
             <div className={s.last_events}>
                 {pastEvents.slice(0, visiblePastEvents).map((event: IEvent) => {
-                    const {day, weekday} = formatDateParts(event.date)
+                    const {day, weekday} = formatDateParts(event.date[0])
                     return (
                         <div className={s.last_event} key={event.id}>
                             <span className={s.date}>{day}</span>
