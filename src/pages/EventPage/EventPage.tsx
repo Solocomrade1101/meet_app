@@ -25,7 +25,7 @@ export const EventPage: React.FC = () => {
 
     if (!event) return <div className={s.error}>Событие не найдено</div>
 
-    const {day, weekday} = formatDateParts(event.date)
+    const {day, weekday} = formatDateParts(event.date[0])
 
     const handleShare = () => {
         const url = event.link_event
