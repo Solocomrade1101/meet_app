@@ -3,11 +3,13 @@ import s from './Sort.module.scss';
 import cn from 'classnames';
 import { SortOpen } from "./components";
 import type { Format, ISortProps, SortOrder } from "./interfaces";
+import {useNavigate} from "react-router-dom";
 
 type FilterType = 'sortOrder' | 'format' | 'cities';
 
 export const Sort: FC<ISortProps> = ({ filters, setFilters }) => {
     const [activeFilter, setActiveFilter] = useState<FilterType | null>(null);
+    const navigate = useNavigate()
 
     const handleOpen = (type: FilterType) => {
         setActiveFilter(type);
@@ -86,7 +88,7 @@ export const Sort: FC<ISortProps> = ({ filters, setFilters }) => {
             )}
 
             <div className={s.buttons_block}>
-                <button className={cn(s.button, s.only_icon)}>
+                <button className={cn(s.button, s.only_icon)} onClick={() => navigate(`/search`)}>
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
                          xmlns="http://www.w3.org/2000/svg">
                         <path

@@ -7,7 +7,7 @@ import {useEvents} from "../../EventContext/EventContext";
 export const EventPage: React.FC = () => {
     const { id } = useParams()
     const navigate = useNavigate()
-    const { events, loading, error } = useEvents()
+    const { events } = useEvents()
     useEffect(() => {
         const tg = window.Telegram.WebApp;
         tg.BackButton.show();
@@ -19,9 +19,6 @@ export const EventPage: React.FC = () => {
         };
     }, [navigate]);
 
-
-    if (loading) return <div className={s.loader}>Загрузка...</div>
-    if (error) return <div className={s.error}>Ошибка: {error}</div>
 
     const event = events.find(e => e.id === Number(id))
 

@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useTelegram } from './hooks/useTelegram'
-import {Home, EventPage} from "./pages";
+import {Home, EventPage, Search} from "./pages";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import {EventsProvider} from "./EventContext/EventContext";
 
@@ -18,6 +18,8 @@ const App = () => {
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/event/:id" element={<EventPage />} />
+                    <Route path="/search" element={<Search />} />
+
                 </Routes>
             </BrowserRouter>
         </EventsProvider>
