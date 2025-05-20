@@ -20,7 +20,7 @@ export const Loader:FC = () => {
                 <g clipPath="url(#paint0_angular_24_1199_clip_path)" data-figma-skip-parse="true">
                     <g transform="matrix(-0.0716326 0.0040848 -0.00375238 -0.0667057 66.5062 6.28168)">
                         <foreignObject x="-1047.9" y="-1047.9" width="2095.8" height="2095.8">
-                            <div xmlns="http://www.w3.org/1999/xhtml"
+                            <div
                                  style={{background:"conic-gradient(from 90deg,rgba(255, 196, 40, 1) 0deg,rgba(255, 158, 87, 1) 176.25deg,rgba(255, 110, 148, 1) 251.25deg,rgba(253, 54, 218, 1) 313.125deg,rgba(207, 44, 229, 1) 360deg)",height:'100%',width:'100%',opacity:'1'}}></div>
                         </foreignObject>
                     </g>

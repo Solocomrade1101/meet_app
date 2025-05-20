@@ -1,1 +1,0 @@
-export {useEvents} from './useEvents'
