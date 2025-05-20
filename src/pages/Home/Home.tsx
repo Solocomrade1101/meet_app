@@ -1,11 +1,13 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import s from './Home.module.scss'
-import {useEvents} from "../../hooks";
 import {Sort} from "./components/Sort";
 import type {IEvent} from "../../types/events.ts";
 import { useNavigate } from 'react-router-dom'
 import {formatDateParts} from "../utils";
 import type {Filters} from "./Interfaces.ts";
+import {useEvents} from "../../EventContext/EventContext";
+import {Loader} from "../../components";
+
 
 export const Home: React.FC = () => {
     const { events, loading, error } = useEvents()
@@ -17,9 +19,17 @@ export const Home: React.FC = () => {
         format: [],
         cities: []
     });
+    const [isDelayOver, setIsDelayOver] = useState(false);
 
-    console.log(filters)
-    if (loading) return <div className={s.loader}>Загрузка...</div>
+    useEffect(() => {
+        const delay = setTimeout(() => {
+            setIsDelayOver(true);
+        }, 1000);
+
+        return () => clearTimeout(delay);
+    }, []);
+
+    if (loading || !isDelayOver) return <Loader />;
     if (error) return <div className={s.error}>Ошибка: {error}</div>
 
     const now = new Date();

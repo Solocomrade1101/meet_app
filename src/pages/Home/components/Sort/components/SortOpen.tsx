@@ -44,7 +44,7 @@ export const SortOpen: FC<SortOpenProps> = ({
 
     const handleReset = () => {
         if (mod === 'radio') {
-            onSelect(""); // сброс радиофильтра
+            onSelect("Сначала ближайшие"); // сброс радиофильтра
         } else {
             onSelect([]); // сброс чекбоксов
         }
@@ -73,8 +73,9 @@ export const SortOpen: FC<SortOpenProps> = ({
                                         <div className={s.customRadio}>
                                             <input
                                                 type="radio"
-                                                name="radio"
+                                                name={`radio-group-${title}`}
                                                 checked={isChecked}
+                                                onTouchStart={() => handleRadioChange(item)}
                                                 onChange={() => handleRadioChange(item)}
                                             />
                                             <span className={s.radioMark}></span>

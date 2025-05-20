@@ -1,8 +1,8 @@
 import React, {useEffect} from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { useEvents } from '../../hooks'
 import s from './EventPage.module.scss'
 import {formatDateParts} from "../utils";
+import {useEvents} from "../../EventContext/EventContext";
 
 export const EventPage: React.FC = () => {
     const { id } = useParams()
@@ -18,6 +18,8 @@ export const EventPage: React.FC = () => {
             tg.BackButton.offClick();
         };
     }, [navigate]);
+
+
     if (loading) return <div className={s.loader}>Загрузка...</div>
     if (error) return <div className={s.error}>Ошибка: {error}</div>
 
