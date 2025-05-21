@@ -1,3 +1,5 @@
+import { cloudStorage } from '@telegram-apps/sdk';
+
 interface StorageInterface {
     setBrowserFavorite(eventId: string): void;
     removeBrowserFavorite(eventId: string): void;
@@ -14,15 +16,7 @@ interface StorageInterface {
 }
 
 function isTgCloudStorageAvailable(): boolean {
-    try {
-        const platform = window.Telegram?.WebApp?.platform;
-        return (
-            typeof window.Telegram?.WebApp?.CloudStorage?.getItem === 'function' &&
-            platform !== 'unknown'
-        );
-    } catch {
-        return false;
-    }
+    return cloudStorage.isSupported();
 }
 
 export const storage: StorageInterface = {
@@ -54,24 +48,18 @@ export const storage: StorageInterface = {
     setTgFavorite: async (eventId: string) => {
         const favorites = await storage.getTgFavorites();
         if (!favorites.includes(eventId)) {
-            await window.Telegram?.WebApp?.CloudStorage?.setItem?.(
-                'favorites',
-                JSON.stringify([...favorites, eventId])
-            );
+            await cloudStorage.setItem('favorites', JSON.stringify([...favorites, eventId]));
         }
     },
 
     removeTgFavorite: async (eventId: string) => {
         const favorites = await storage.getTgFavorites();
-        await window.Telegram?.WebApp?.CloudStorage?.setItem?.(
-            'favorites',
-            JSON.stringify(favorites.filter(id => id !== eventId))
-        );
+        await cloudStorage.setItem('favorites', JSON.stringify(favorites.filter(id => id !== eventId)));
     },
 
     getTgFavorites: async (): Promise<string[]> => {
         try {
-            const data = await window.Telegram?.WebApp?.CloudStorage?.getItem?.('favorites');
+            const data = await cloudStorage.getItem('favorites');
             return data ? JSON.parse(data) : [];
         } catch (err) {
             console.warn('getTgFavorites error:', err);

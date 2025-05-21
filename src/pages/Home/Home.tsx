@@ -40,6 +40,17 @@ export const Home: React.FC = () => {
         loadFavorites();
     }, []);
 
+    const handleToggleFavorite = async (eventId: string) => {
+        const isFavorite = favoriteIds.includes(eventId);
+
+        if (isFavorite) {
+            await storage.removeFavorite(eventId);
+            setFavoriteIds(prev => prev.filter(id => id !== eventId));
+        } else {
+            await storage.addFavorite(eventId);
+            setFavoriteIds(prev => [...prev, eventId]);
+        }
+    };
 
     if (loading || !isDelayOver) return <Loader />;
     if (error) return <div className={s.error}>Ошибка: {error}</div>
@@ -80,18 +91,6 @@ export const Home: React.FC = () => {
 
     const futureEvents = cityFilteredEvents.filter(event => new Date(event.date[0]) >= now);
     const pastEvents = cityFilteredEvents.filter(event => new Date(event.date[0]) < now);
-
-    const handleToggleFavorite = async (eventId: string) => {
-        const isFavorite = favoriteIds.includes(eventId);
-
-        if (isFavorite) {
-            await storage.removeFavorite(eventId);
-            setFavoriteIds(prev => prev.filter(id => id !== eventId));
-        } else {
-            await storage.addFavorite(eventId);
-            setFavoriteIds(prev => [...prev, eventId]);
-        }
-    };
 
 
     return (
