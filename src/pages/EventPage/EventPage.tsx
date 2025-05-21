@@ -20,7 +20,7 @@ export const EventPage: React.FC = () => {
     }, [navigate]);
 
 
-    const event = events.find(e => e.id === Number(id))
+    const event = events.find(e => e.id === id)
 
     if (!event) return <div className={s.error}>Событие не найдено</div>
 

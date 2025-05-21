@@ -78,6 +78,8 @@ declare global {
 
         BackButton: TelegramWebAppBackButton
         MainButton: TelegramWebAppMainButton
+
+        CloudStorage: TelegramWebAppCloudStorage
     }
 
     interface TelegramWebAppWithShare extends TelegramWebApp {

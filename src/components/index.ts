@@ -1,1 +1,2 @@
-export {Loader} from './Loader'
+export {Loader} from './components'
+export {Footer} from './components'

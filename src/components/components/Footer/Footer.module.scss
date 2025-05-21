@@ -1,0 +1,23 @@
+.container {
+  position: fixed;
+  bottom: 0;
+  width: calc(100% - 32px);
+  background-color: #15171A;
+
+  display: flex;
+  justify-content: space-between;
+
+  .button {
+    width: 100%;
+    height: 40px;
+
+    svg {
+      fill: #78818F
+    }
+    &.active {
+      svg{
+        fill: #F1F4F8;
+      }
+    }
+  }
+}

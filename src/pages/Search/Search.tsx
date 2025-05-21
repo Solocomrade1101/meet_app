@@ -63,7 +63,7 @@ export const Search:FC = () => {
                     {filteredEvents.map(item => {
                         const {day, weekday} = formatDateParts(item.date[0])
                         return (
-                            <div className={s.event} key={item.id}>
+                            <div className={s.event} key={item.id} onClick={() => navigate('/event/' + item.id)}>
                                 <span className={s.date}>{day}</span>
                                 <span className={s.title}>{item.title}</span>
                                 <div className={s.city_block}>
