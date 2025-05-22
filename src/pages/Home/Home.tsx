@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import s from './Home.module.scss'
 import {Sort} from "./components/Sort";
-import { useNavigate } from 'react-router-dom'
 import {formatDateParts} from "../utils";
 import type {Filters} from "./Interfaces.ts";
 import {useEvents} from "../../EventContext/EventContext";
@@ -9,28 +8,21 @@ import {Footer, Loader} from "../../components";
 import {storage} from "../../utils";
 import type {IEvent} from "../../types";
 import {FutureEvent} from "./components/FutureEvent";
+import {useAppState} from "../../EventContext/AppStateContext";
 
 
 export const Home: React.FC = () => {
     const { events, loading, error } = useEvents()
+    const { isDelayOver } = useAppState()
     const [visiblePastEvents, setVisiblePastEvents] = useState(4)
-    const navigate = useNavigate()
     const [favoriteIds, setFavoriteIds] = useState<string[]>([]);
+    const [showScrollTop, setShowScrollTop] = useState(false)
 
     const [filters, setFilters] = useState<Filters>({
         sortOrder: 'Сначала ближайшие',
         format: [],
         cities: []
     });
-    const [isDelayOver, setIsDelayOver] = useState(false);
-
-    useEffect(() => {
-        const delay = setTimeout(() => {
-            setIsDelayOver(true);
-        }, 1000);
-
-        return () => clearTimeout(delay);
-    }, []);
 
     useEffect(() => {
         const loadFavorites = async () => {
@@ -51,6 +43,24 @@ export const Home: React.FC = () => {
             setFavoriteIds(prev => [...prev, eventId]);
         }
     };
+
+
+
+    useEffect(() => {
+        const onScroll = () => {
+            setShowScrollTop(window.scrollY > 150)
+        }
+
+        window.addEventListener('scroll', onScroll)
+        return () => window.removeEventListener('scroll', onScroll)
+    }, [])
+
+    const handleScrollTop = () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth',
+        })
+    }
 
     if (loading || !isDelayOver) return <Loader />;
     if (error) return <div className={s.error}>Ошибка: {error}</div>
@@ -132,6 +142,19 @@ export const Home: React.FC = () => {
             )}
 
             <Footer/>
+
+            {showScrollTop && (
+                <button className={s.scroll} onClick={handleScrollTop}>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path
+                            fillRule="evenodd"
+                            clipRule="evenodd"
+                            d="M18.7686 10.8428C18.4411 11.1848 17.8876 11.2067 17.5322 10.8916L12.875 6.76278L12.875 19.1579C12.875 19.623 12.4832 20 12 20C11.5168 20 11.125 19.623 11.125 19.1579L11.125 6.76278L6.46784 10.8916C6.11241 11.2067 5.55886 11.1848 5.23144 10.8428C4.90403 10.5007 4.92674 9.96797 5.28217 9.65287L11.4072 4.22274C11.7422 3.92575 12.2578 3.92575 12.5928 4.22274L18.7178 9.65287C19.0733 9.96797 19.096 10.5007 18.7686 10.8428Z"
+                            fill="#F1F4F8"
+                        />
+                    </svg>
+                </button>
+            )}
         </div>
     )
 }

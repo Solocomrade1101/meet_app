@@ -9,8 +9,8 @@ export const FutureEvent: React.FC<IEventCardProps> = ({ event, isFavorite, onTo
     const navigate = useNavigate();
 
     const handleClickFavorite = (e: React.MouseEvent) => {
-        e.stopPropagation(); // чтобы не перейти по ссылке
-        onToggleFavorite();  // уведомляем родителя
+        e.stopPropagation();
+        onToggleFavorite();
     };
 
 

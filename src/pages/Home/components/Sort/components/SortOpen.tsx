@@ -44,11 +44,11 @@ export const SortOpen: FC<SortOpenProps> = ({
 
     const handleReset = () => {
         if (mod === 'radio') {
-            onSelect("Сначала ближайшие"); // сброс радиофильтра
+            onSelect("Сначала ближайшие");
         } else {
-            onSelect([]); // сброс чекбоксов
+            onSelect([]);
         }
-        onClose(); // закрыть модалку
+        onClose();
     };
 
     return (

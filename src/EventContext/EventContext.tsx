@@ -1,7 +1,6 @@
-
-import React, { createContext, useContext, useEffect, useState } from 'react';
-import type {IEvent} from "../types";
-import { supabase } from '../api/supabaseClient'
+import React, { createContext, useContext, useEffect, useState, useRef } from 'react';
+import type { IEvent } from '../types';
+import { supabase } from '../api/supabaseClient';
 
 interface EventsContextType {
     events: IEvent[];
@@ -20,7 +19,14 @@ export const EventsProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
+    const hasLoadedOnce = useRef(false);
+
     useEffect(() => {
+        if (hasLoadedOnce.current) {
+            setLoading(false);
+            return;
+        }
+
         const fetchEvents = async () => {
             const { data, error } = await supabase.from('events').select('*');
 
@@ -28,6 +34,7 @@ export const EventsProvider: React.FC<{ children: React.ReactNode }> = ({ childr
                 setError(error.message);
             } else {
                 setEvents(data || []);
+                hasLoadedOnce.current = true;
             }
 
             setLoading(false);

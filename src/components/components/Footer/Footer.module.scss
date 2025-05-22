@@ -21,3 +21,57 @@
     }
   }
 }
+
+.overlay {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 9999;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.72);
+  overflow: hidden;
+  touch-action: none;
+  .talk {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background-color: #15171A;
+    border-radius: 24px 24px 0 0;
+    padding: 16px;
+    width: 100%;
+
+    .top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+
+      .title {
+        font-weight: 500;
+        font-size: 20px;
+        line-height: 24px;
+      }
+    }
+
+    .text {
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 24px;
+      margin-bottom: 40px;
+    }
+
+    .button {
+      height: 52px;
+      background-color: #F1F4F8;
+      width: 100%;
+      border-radius: 14px;
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 24px;
+      color: #15171A;
+    }
+  }
+}
