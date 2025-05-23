@@ -57,7 +57,7 @@ export const Favorite: FC = () => {
             ) : (
                 <div className={s.events}>
                     {favoriteEvents.map(item => {
-                        const { day, weekday } = formatDateParts(item.date[0]);
+                        const { day, weekday } = formatDateParts(item.date);
 
                         return (
                             <div key={item.id} className={s.event} onClick={() => navigate(`/event/${item.id}`)}>

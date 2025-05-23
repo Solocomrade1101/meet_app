@@ -61,7 +61,7 @@ export const Search:FC = () => {
             {filteredEvents.length !== 0  ? (
                 <div className={s.events}>
                     {filteredEvents.map(item => {
-                        const {day, weekday} = formatDateParts(item.date[0])
+                        const {day, weekday} = formatDateParts(item.date)
                         return (
                             <div className={s.event} key={item.id} onClick={() => navigate('/event/' + item.id)}>
                                 <span className={s.date}>{day}</span>
