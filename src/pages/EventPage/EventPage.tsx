@@ -38,7 +38,7 @@ export const EventPage: React.FC = () => {
 
     if (!event) return <div className={s.error}>Событие не найдено</div>
 
-    const {day, weekday} = formatDateParts(event.date[0])
+    const {day, weekday} = formatDateParts(event.date)
 
     const handleShare = () => {
         const url = event.link_event
@@ -102,8 +102,8 @@ export const EventPage: React.FC = () => {
                             stroke="#F1F4F8" strokeWidth="1.49997" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
                     <div className={s.data}>
-                        <span className={s.day}>{day}, </span>
-                        <span className={s.weekday}>{weekday}</span>
+                        <span className={s.day}>{day}</span>
+                        {weekday && <span className={s.weekday}>{`, ${weekday}`}</span>}
                     </div>
                 </div>
 

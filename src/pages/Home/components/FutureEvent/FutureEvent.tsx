@@ -18,22 +18,23 @@ export const FutureEvent: React.FC<IEventCardProps> = ({ event, isFavorite, onTo
     const [imageLoaded, setImageLoaded] = useState(false);
 
 
-    const { day, weekday } = formatDateParts(event.date[0]);
+    const { day, weekday } = formatDateParts(event.date);
 
     return (
         <div className={s.event} onClick={() => navigate(`/event/${event.id}`)}>
-            <div className={s.data}>
-                <span className={s.day}>{day}, </span>
-                <span className={s.weekday}>{weekday}</span>
-            </div>
-            {!imageLoaded && <div className={s.image_skeleton} />}
+
+            {!imageLoaded && <div className={s.image_skeleton}/>}
 
             <img
                 src={event.image}
                 alt={event.title}
-                className={cn(s.image, { [s.hidden]: !imageLoaded })}
+                className={cn(s.image, {[s.hidden]: !imageLoaded})}
                 onLoad={() => setImageLoaded(true)}
             />
+            <div className={s.data}>
+                <span className={s.day}>{day}</span>
+                {weekday && <span className={s.weekday}>{`, ${weekday}`}</span>}
+            </div>
             <div className={s.info}>
                 <span className={s.title}>{event.title}</span>
                 <button className={cn(s.like)} onClick={handleClickFavorite}>

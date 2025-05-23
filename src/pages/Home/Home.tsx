@@ -99,8 +99,8 @@ export const Home: React.FC = () => {
         return event.place.some(city => filters.cities.includes(city));
     });
 
-    const futureEvents = cityFilteredEvents.filter(event => new Date(event.date[0]) >= now);
-    const pastEvents = cityFilteredEvents.filter(event => new Date(event.date[0]) < now);
+    const futureEvents = cityFilteredEvents.filter(event => new Date(event.date[event.date.length - 1]) >= now);
+    const pastEvents = cityFilteredEvents.filter(event => new Date(event.date[event.date.length - 1]) < now);
 
 
     return (
@@ -117,7 +117,7 @@ export const Home: React.FC = () => {
             <h2 className={s.last_title}>Прошедшие события</h2>
             <div className={s.last_events}>
                 {pastEvents.slice(0, visiblePastEvents).map((event: IEvent) => {
-                    const {day, weekday} = formatDateParts(event.date[0])
+                    const {day, weekday} = formatDateParts(event.date)
                     return (
                         <div className={s.last_event} key={event.id}>
                             <span className={s.date}>{day}</span>
