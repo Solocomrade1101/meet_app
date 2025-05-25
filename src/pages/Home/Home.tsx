@@ -100,7 +100,13 @@ export const Home: React.FC = () => {
     });
 
     const futureEvents = cityFilteredEvents.filter(event => new Date(event.date[event.date.length - 1]) >= now);
-    const pastEvents = cityFilteredEvents.filter(event => new Date(event.date[event.date.length - 1]) < now);
+    const pastEvents = cityFilteredEvents
+        .filter(event => new Date(event.date[event.date.length - 1]) < now)
+        .sort((a, b) => {
+            const dateA = new Date(a.date[0]);
+            const dateB = new Date(b.date[0]);
+            return +dateA - +dateB;
+        });
 
 
     return (
