@@ -7,6 +7,7 @@ import cn from "classnames";
 import likeActive from "../../image/like_active.svg";
 import like from "../../image/like.svg";
 import {storage} from "../../utils";
+import type {IEvent} from "../../types";
 
 export const EventPage: React.FC = () => {
     const { id } = useParams()
@@ -40,22 +41,74 @@ export const EventPage: React.FC = () => {
 
     const {day, weekday} = formatDateParts(event.date)
 
+    const formatShareText = (event: IEvent): string => {
+        const date = new Date(`${event.date[0]}T${event.time}`);
+
+        const options: Intl.DateTimeFormatOptions = {
+            weekday: 'short',
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            timeZoneName: 'short'
+        };
+
+        const formattedDate = date.toLocaleString('ru-RU', options);
+
+        const isOnline = event.place.includes("Онлайн");
+        const location = event.place.filter(p => p.toLowerCase() !== 'онлайн').join(', ') || 'Онлайн';
+
+        const eventBotUrl = `https://t.me/Meet_tg_app_bot?start=${event.id}`;
+        const subscribeUrl = `https://t.me/Meet_tg_app_bot?start=subscribe_all`;
+
+        const message = `
+${event.title}
+${eventBotUrl}
+
+📍 ${location}
+⏰ ${formattedDate}
+${isOnline ? '📺 Онлайн' : ''}
+
+${event.description?.trim() || ''}
+
+Подписывайся на события в боте @Meet_tg_app_bot
+${subscribeUrl}
+
+#мероприятие #ивент ${isOnline ? '#онлайн' : '#офлайн'}
+`.trim();
+
+        return message;
+    };
+
+
+
     const handleShare = () => {
-        const url = event.link_event
+        const text = formatShareText(event);
+        const shareUrl = `https://t.me/share/url?url=${encodeURIComponent(`https://t.me/Meet_tg_app_bot?start=${event.id}`)}&text=${encodeURIComponent(text)}`;
 
         if (navigator.share) {
             navigator.share({
                 title: event.title,
-                text: 'Смотри это событие!',
-                url,
-            }).catch((err) => {
-                console.log('Share failed:', err.message)
-            })
+                text: text,
+                url: `https://t.me/Meet_tg_app_bot?start=${event.id}`
+            }).catch(console.error);
+        } else if (navigator.clipboard) {
+            navigator.clipboard.writeText(text).then(() => {
+                window.open(shareUrl, '_blank');
+            });
         } else {
-            navigator.clipboard.writeText(url)
-            alert('Ссылка скопирована!')
+            // Fallback для старых браузеров
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+            window.open(shareUrl, '_blank');
         }
-    }
+    };
+
 
     const handleToggleFavorite = async (event: React.MouseEvent<HTMLButtonElement>, eventId: string) => {
         event.stopPropagation()
@@ -70,6 +123,38 @@ export const EventPage: React.FC = () => {
         }
     };
 
+    const createGoogleCalendarLink = (event: IEvent) => {
+        const dateStr = event.date[0];
+        const timeStr = event.time || '00:00:00';
+
+        const [year, month, day] = dateStr.split('-').map(Number);
+        const [hours, minutes, seconds] = timeStr.split(':').map(Number);
+
+        const start = new Date(year, month - 1, day, hours, minutes, seconds);
+
+        const end = new Date(start.getTime() + 2 * 60 * 60 * 1000);
+
+        const pad = (n: number) => n.toString().padStart(2, '0');
+        const formatForCalendar = (d: Date) =>
+            `${d.getFullYear()}${pad(d.getMonth() + 1)}${pad(d.getDate())}T${pad(d.getHours())}${pad(d.getMinutes())}${pad(d.getSeconds())}`;
+
+        const details = {
+            text: event.title,
+            dates: `${formatForCalendar(start)}/${formatForCalendar(end)}`,
+            details: event.description || '',
+            location: event.place.join(', '),
+        };
+
+        const params = new URLSearchParams({
+            action: 'TEMPLATE',
+            text: details.text,
+            dates: details.dates,
+            details: details.details,
+            location: details.location,
+        });
+
+        return `https://www.google.com/calendar/render?${params.toString()}`;
+    };
 
 
     return (
@@ -113,7 +198,7 @@ export const EventPage: React.FC = () => {
                             d="M10.0026 5.99967V9.99967L12.6693 11.333M16.6693 9.99967C16.6693 13.6816 13.6845 16.6663 10.0026 16.6663C6.32071 16.6663 3.33594 13.6816 3.33594 9.99967C3.33594 6.31778 6.32071 3.33301 10.0026 3.33301C13.6845 3.33301 16.6693 6.31778 16.6693 9.99967Z"
                             stroke="#F1F4F8" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
-                    <span className={s.time}>{event.time}</span>
+                    <span className={s.time}>{event.time.slice(0,5)}</span>
                 </div>
 
                 <div className={s.data_block}>
@@ -129,7 +214,12 @@ export const EventPage: React.FC = () => {
                 </div>
             </div>
 
-            <a href={event.link_calendar} target={"_blank"} className={s.add_calendar}>Добавить в календарь</a>
+            <a
+                href={createGoogleCalendarLink(event)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={s.add_calendar}
+            >Добавить в календарь</a>
 
             <div className={s.description_block}>
                 <span className={s.title}>О мероприятии</span>

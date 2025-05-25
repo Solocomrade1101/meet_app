@@ -9,7 +9,7 @@ export const Search:FC = () => {
     const { events } = useEvents()
     const navigate = useNavigate()
     const filteredEvents = useMemo(() => {
-        return events.filter(event => event.title.includes(value))
+        return events.filter(event => event.title.toLowerCase().includes(value.toLowerCase()) || event.description.toLowerCase().includes(value.toLowerCase()))
     }, [events, value])
 
     useEffect(() => {

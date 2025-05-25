@@ -64,6 +64,9 @@
     }
 
     .button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
       height: 52px;
       background-color: #F1F4F8;
       width: 100%;

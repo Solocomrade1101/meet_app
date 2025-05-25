@@ -116,11 +116,7 @@ export const SortOpen: FC<SortOpenProps> = ({
                             <button className={s.reset} onClick={handleReset}>Сбросить</button>
                         )}
 
-                        <button className={s.submit} onClick={handleApply} disabled={
-                            mod === 'radio'
-                                ? !localRadio
-                                : localSelected.length === 0
-                        }>
+                        <button className={s.submit} onClick={handleApply}>
                             Применить
                         </button>
                     </div>

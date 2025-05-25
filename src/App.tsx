@@ -1,28 +1,28 @@
 import { useEffect } from 'react'
 import { useTelegram } from './hooks/useTelegram'
 import {Home, EventPage, Search, Favorite} from "./pages";
-import {BrowserRouter, Route, Routes} from "react-router-dom";
-import {EventsProvider} from "./EventContext/EventContext";
+import { Route, Routes } from "react-router-dom";
+import {NavigateFromTelegram} from "./components/components/NavigateFromTelegram";
 
 const App = () => {
-    const { tg } = useTelegram()
+    const { tg } = useTelegram();
 
     useEffect(() => {
-        tg.ready()
-        tg.expand()
-    }, [])
+        tg.ready();
+        tg.expand();
+    }, []);
 
     return (
-            <BrowserRouter basename="/meet_app/">
-                <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/event/:id" element={<EventPage />} />
-                    <Route path="/search" element={<Search />} />
-                    <Route path="/favorite" element={<Favorite />} />
+        <>
+            <NavigateFromTelegram />
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/event/:id" element={<EventPage />} />
+                <Route path="/search" element={<Search />} />
+                <Route path="/favorite" element={<Favorite />} />
+            </Routes>
+        </>
+    );
+};
 
-                </Routes>
-            </BrowserRouter>
-    )
-}
-
-export default App
+export default App;

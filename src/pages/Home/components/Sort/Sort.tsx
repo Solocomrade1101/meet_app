@@ -99,7 +99,7 @@ export const Sort: FC<ISortProps> = ({ filters, setFilters }) => {
                 </button>
 
                 <button onClick={() => handleOpen("sortOrder")} className={s.button}>
-                    <span className={s.text}>Ближайшие</span>
+                    <span className={s.text}>{filters.sortOrder.includes("ближайшие") ? "Ближайшие" : "Поздние"}</span>
                     <svg width="16" height="20" viewBox="0 0 16 20" fill="none"
                          xmlns="http://www.w3.org/2000/svg">
                         <path d="M4 8L8 12L12 8" stroke="#F1F4F8" strokeWidth="1.6"
@@ -107,7 +107,9 @@ export const Sort: FC<ISortProps> = ({ filters, setFilters }) => {
                     </svg>
                 </button>
 
-                <button onClick={() => handleOpen("format")} className={s.button}>
+                <button onClick={() => handleOpen("format")} className={cn(s.button, {
+                    [s.active]: filters.format.length > 0,
+                })}>
                     <span className={s.text}>Формат</span>
                     <svg width="16" height="20" viewBox="0 0 16 20" fill="none"
                          xmlns="http://www.w3.org/2000/svg">
@@ -116,7 +118,9 @@ export const Sort: FC<ISortProps> = ({ filters, setFilters }) => {
                     </svg>
                 </button>
 
-                <button onClick={() => handleOpen("cities")} className={s.button}>
+                <button onClick={() => handleOpen("cities")} className={cn(s.button, {
+                    [s.active]: filters.cities.length > 0,
+                })}>
                     <span className={s.text}>Город</span>
                     <svg width="16" height="20" viewBox="0 0 16 20" fill="none"
                          xmlns="http://www.w3.org/2000/svg">

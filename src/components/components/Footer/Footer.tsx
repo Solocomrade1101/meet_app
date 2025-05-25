@@ -43,7 +43,7 @@ export const Footer:FC = () => {
                 <div className={s.overlay}>
                     <div className={s.talk}>
                         <div className={s.top}>
-                            <span className={s.title}>Добавить событие</span>
+                            <span className={s.title}>Предложить событие</span>
                             <button onClick={(event) => {
                                 event.stopPropagation()
 
@@ -65,7 +65,7 @@ export const Footer:FC = () => {
                             Если вы знаете крутые мероприятия или организуете что-то сами, расскажите нам)
                         </div>
 
-                        <button className={s.button}>Рассказать о событии</button>
+                        <a href={'https://t.me/User180126'} target={"_blank"} className={s.button}>Рассказать о событии</a>
                     </div>
                 </div>
             )}

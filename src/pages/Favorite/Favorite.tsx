@@ -23,6 +23,16 @@ export const Favorite: FC = () => {
         };
         loadFavorites();
     }, []);
+    useEffect(() => {
+        const tg = window.Telegram.WebApp;
+        tg.BackButton.show();
+        tg.BackButton.onClick(() => navigate(-1));
+
+        return () => {
+            tg.BackButton.hide();
+            tg.BackButton.offClick();
+        };
+    }, [navigate]);
 
     const favoriteEvents = events.filter(event => favoriteIds.includes(event.id));
     const handleToggleFavorite = async (event: React.MouseEvent<HTMLButtonElement>, eventId: string) => {

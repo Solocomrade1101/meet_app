@@ -24,6 +24,17 @@
       border-radius: 12px;
       color: #F1F4F8;
 
+      &.active {
+        background-color: #F1F4F8;
+        color: #15171A;
+
+        svg {
+          path {
+            stroke: #15171A !important;
+          }
+        }
+      }
+
       &.only_icon {
         padding: 8px;
       }
