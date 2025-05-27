@@ -38,12 +38,17 @@
     gap: 32px;
 
     .event {
-      .date {
+      .data {
         margin-bottom: 6px;
         font-weight: 400;
         font-size: 16px;
         line-height: 20px;
-        color: #78818F;
+        .day {
+          color: #78818F;
+        }
+        .weekday {
+          color: #78818F;
+        }
       }
 
       .event_title_block {

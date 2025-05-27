@@ -1,0 +1,38 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+  margin-top: 96px;
+
+  img {
+    width: 128px;
+    height: 128px;
+    object-fit: cover;
+  }
+
+  .text {
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 24px;
+    text-align: center;
+    display: block;
+    max-width: 380px;
+  }
+
+  .button {
+    position: absolute;
+    bottom: 42px;
+    width: calc(100% - 32px);
+    height: 52px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 14px;
+    background-color: #F1F4F8;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    color: #15171A;
+  }
+}

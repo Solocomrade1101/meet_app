@@ -9,9 +9,12 @@ import {storage} from "../../utils";
 import type {IEvent} from "../../types";
 import {FutureEvent} from "./components/FutureEvent";
 import {useAppState} from "../../EventContext/AppStateContext";
+import {useNavigate} from "react-router-dom";
+import {ErrorPage} from "./components/ErrorPage";
 
 
 export const Home: React.FC = () => {
+    const navigate = useNavigate();
     const { events, loading, error } = useEvents()
     const { isDelayOver } = useAppState()
     const [visiblePastEvents, setVisiblePastEvents] = useState(4)
@@ -63,7 +66,7 @@ export const Home: React.FC = () => {
     }
 
     if (loading || !isDelayOver) return <Loader />;
-    if (error) return <div className={s.error}>Ошибка: {error}</div>
+    if (error) return <ErrorPage/>
 
     const now = new Date();
 
@@ -99,14 +102,23 @@ export const Home: React.FC = () => {
         return event.place.some(city => filters.cities.includes(city));
     });
 
-    const futureEvents = cityFilteredEvents.filter(event => new Date(event.date[0]) >= now);
-    const pastEvents = cityFilteredEvents
-        .filter(event => new Date(event.date[event.date.length - 1]) < now)
-        .sort((a, b) => {
-            const dateA = new Date(a.date[0]);
-            const dateB = new Date(b.date[0]);
-            return +dateB - +dateA ;
-        });
+    const stripTime = (dateStr: string) => {
+        const [year, month, day] = dateStr.split('-').map(Number);
+        return new Date(year, month - 1, day); // месяц с 0
+    };
+
+    const today = new Date();
+    const currentDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+
+    const futureEvents = cityFilteredEvents.filter(event =>
+        event.date.some(date => stripTime(date) >= currentDate)
+    );
+
+    const pastEvents = cityFilteredEvents.filter(event =>
+        event.date.every(date => stripTime(date) < currentDate)
+    );
+
+
 
 
     return (
@@ -132,7 +144,7 @@ export const Home: React.FC = () => {
                 {pastEvents.slice(0, visiblePastEvents).map((event: IEvent) => {
                     const {day, weekday} = formatDateParts(event.date)
                     return (
-                        <div className={s.last_event} key={event.id}>
+                        <div className={s.last_event} key={event.id} onClick={() => navigate(`/event/${event.id}`)}>
                             <span className={s.date}>{day}</span>
                             <span className={s.title}>{event.title}</span>
                             <div className={s.city_block}>

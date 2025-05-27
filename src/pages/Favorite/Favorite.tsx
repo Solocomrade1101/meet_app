@@ -71,7 +71,10 @@ export const Favorite: FC = () => {
 
                         return (
                             <div key={item.id} className={s.event} onClick={() => navigate(`/event/${item.id}`)}>
-                                <span className={s.date}>{day}, {weekday}</span>
+                                <div className={s.data}>
+                                    <span className={s.day}>{day}</span>
+                                    {weekday && <span className={s.weekday}>{`, ${weekday}`}</span>}
+                                </div>
                                 <div className={s.event_title_block}>
                                     <span className={s.event_title}>{item.title}</span>
                                     <button className={cn(s.like, favoriteIds.includes(item.id) && s.favorite)}
