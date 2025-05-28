@@ -4,6 +4,7 @@ export interface IEvent {
     description: string
     date: string[]
     time: string
+    time_zone: string
     online: string
     place: string[]
     link_calendar: string

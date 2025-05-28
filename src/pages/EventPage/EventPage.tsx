@@ -28,7 +28,7 @@ export const EventPage: React.FC = () => {
 
     useEffect(() => {
         const fetchFavorites = async () => {
-            const ids = await storage.getFavorites(); // предполагается, что возвращает массив id
+            const ids = await storage.getFavorites();
             setFavoriteIds(ids);
         };
         fetchFavorites();
@@ -44,38 +44,31 @@ export const EventPage: React.FC = () => {
     const formatShareText = (event: IEvent): string => {
         const date = new Date(`${event.date[0]}T${event.time}`);
 
-        const options: Intl.DateTimeFormatOptions = {
+        const formattedDate = date.toLocaleString('ru-RU', {
             weekday: 'short',
             day: 'numeric',
             month: 'long',
-            year: 'numeric',
             hour: '2-digit',
             minute: '2-digit',
-            timeZoneName: 'short'
-        };
-
-        const formattedDate = date.toLocaleString('ru-RU', options);
+            timeZone: 'Europe/Moscow',
+        });
 
         const isOnline = event.place.includes("Онлайн");
-        const location = event.place.filter(p => p.toLowerCase() !== 'онлайн').join(', ') || 'Онлайн';
-
-        const eventBotUrl = `https://t.me/Meet_tg_app_bot?start=${event.id}`;
-        const subscribeUrl = `https://t.me/Meet_tg_app_bot?start=subscribe_all`;
+        const location = event.place.filter(p => p.toLowerCase() !== 'онлайн').join(', ');
+        const locationText = isOnline
+            ? location ? `Онлайн, ${location}` : 'Онлайн'
+            : location || 'Место не указано';
 
         const message = `
-${event.title}
-${eventBotUrl}
+${event.title} 
+${event.link_event}
 
-📍 ${location}
-⏰ ${formattedDate}
-${isOnline ? '📺 Онлайн' : ''}
+Когда: ${formattedDate} ${event.time_zone}
+Где: ${locationText}
 
 ${event.description?.trim() || ''}
 
-Подписывайся на события в боте @Meet_tg_app_bot
-${subscribeUrl}
-
-#мероприятие #ивент ${isOnline ? '#онлайн' : '#офлайн'}
+Все события собраны в нашем мини-апп: https://t.me/Meet_tg_app_bot
 `.trim();
 
         return message;
@@ -85,29 +78,22 @@ ${subscribeUrl}
 
     const handleShare = () => {
         const text = formatShareText(event);
-        const shareUrl = `https://t.me/share/url?url=${encodeURIComponent(`https://t.me/Meet_tg_app_bot?start=${event.id}`)}&text=${encodeURIComponent(text)}`;
 
         if (navigator.share) {
             navigator.share({
                 title: event.title,
-                text: text,
-                url: `https://t.me/Meet_tg_app_bot?start=${event.id}`
-            }).catch(console.error);
-        } else if (navigator.clipboard) {
-            navigator.clipboard.writeText(text).then(() => {
-                window.open(shareUrl, '_blank');
+                text,
+            }).catch((err) => {
+                console.log('Share failed:', err.message);
             });
         } else {
-            // Fallback для старых браузеров
-            const textArea = document.createElement('textarea');
-            textArea.value = text;
-            document.body.appendChild(textArea);
-            textArea.select();
-            document.execCommand('copy');
-            document.body.removeChild(textArea);
-            window.open(shareUrl, '_blank');
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Текст скопирован! Можешь вставить в сообщение');
+            });
         }
     };
+
+
 
 
     const handleToggleFavorite = async (event: React.MouseEvent<HTMLButtonElement>, eventId: string) => {
@@ -199,6 +185,7 @@ ${subscribeUrl}
                             stroke="#F1F4F8" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
                     <span className={s.time}>{event.time.slice(0,5)}</span>
+                    <span className={s.time_zone}>{event.time_zone}</span>
                 </div>
 
                 <div className={s.data_block}>
