@@ -7,7 +7,6 @@ import {AppStateProvider} from "./EventContext/AppStateContext";
 import {BrowserRouter} from "react-router-dom";
 
 createRoot(document.getElementById('root')!).render(
-  <StrictMode>
       <AppStateProvider>
           <EventsProvider>
               <BrowserRouter basename="/meet_app/">
@@ -15,5 +14,4 @@ createRoot(document.getElementById('root')!).render(
               </BrowserRouter>
           </EventsProvider>
       </AppStateProvider>
-  </StrictMode>,
 )

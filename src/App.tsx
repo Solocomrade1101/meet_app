@@ -2,7 +2,8 @@ import { useEffect } from 'react'
 import { useTelegram } from './hooks/useTelegram'
 import {Home, EventPage, Search, Favorite} from "./pages";
 import { Route, Routes } from "react-router-dom";
-import {NavigateFromTelegram} from "./components/components/NavigateFromTelegram";
+
+import {init, isTMA, viewport} from "@telegram-apps/sdk";
 
 const App = () => {
     const { tg } = useTelegram();
@@ -10,11 +11,29 @@ const App = () => {
     useEffect(() => {
         tg.ready();
         tg.expand();
+
     }, []);
 
+    useEffect(() => {
+        async function initTg() {
+            if (await isTMA()) {
+                init();
+
+                if (viewport.mount.isAvailable()) {
+                    await viewport.mount();
+                    viewport.expand();
+                }
+
+                if (viewport.requestFullscreen.isAvailable()) {
+                    await viewport.requestFullscreen();
+                }
+            }
+        }
+        initTg();
+
+    }, []);
     return (
         <>
-            <NavigateFromTelegram />
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/event/:id" element={<EventPage />} />
@@ -26,3 +45,4 @@ const App = () => {
 };
 
 export default App;
+
