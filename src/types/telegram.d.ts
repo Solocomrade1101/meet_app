@@ -71,6 +71,7 @@ declare global {
         colorScheme: 'light' | 'dark'
         isExpanded: boolean
         themeParams: TelegramWebAppThemeParams
+        viewportStableHeight?: number;
 
         close(): void
         expand(): void
@@ -80,6 +81,13 @@ declare global {
         MainButton: TelegramWebAppMainButton
 
         CloudStorage: TelegramWebAppCloudStorage
+        enableClosingConfirmation?: () => void;
+        disableClosingConfirmation?: () => void;
+        isClosingConfirmationEnabled?: boolean;
+
+        onEvent: (eventType: string, eventHandler: Function) => void;
+        offEvent: (eventType: string, eventHandler: Function) => void;
+        requestFullscreen: () => void
     }
 
     interface TelegramWebAppWithShare extends TelegramWebApp {
