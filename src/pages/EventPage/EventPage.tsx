@@ -166,38 +166,42 @@ ${event.description?.trim() || ''}
                     </button>
                 </div>
 
-                <div className={s.data_block}>
-                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M12.9553 2.58984V5.55207M7.0309 2.58984V5.55207M3.32812 8.51429H16.6581M4.80924 4.07095H15.177C15.995 4.07095 16.6581 4.73407 16.6581 5.55207V15.9198C16.6581 16.7378 15.995 17.401 15.177 17.401H4.80924C3.99124 17.401 3.32812 16.7378 3.32812 15.9198V5.55207C3.32812 4.73407 3.99124 4.07095 4.80924 4.07095Z"
-                            stroke="#F1F4F8" strokeWidth="1.49997" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
-                    <div className={s.data}>
-                        <span className={s.day}>{day}</span>
-                        {weekday && <span className={s.weekday}>{`, ${weekday}`}</span>}
+                <div className={s.arguments}>
+                    <div className={s.data_block}>
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M12.9553 2.58984V5.55207M7.0309 2.58984V5.55207M3.32812 8.51429H16.6581M4.80924 4.07095H15.177C15.995 4.07095 16.6581 4.73407 16.6581 5.55207V15.9198C16.6581 16.7378 15.995 17.401 15.177 17.401H4.80924C3.99124 17.401 3.32812 16.7378 3.32812 15.9198V5.55207C3.32812 4.73407 3.99124 4.07095 4.80924 4.07095Z"
+                                stroke="#F1F4F8" strokeWidth="1.49997" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                        <div className={s.data}>
+                            <span className={s.day}>{day}</span>
+                            {weekday && <span className={s.weekday}>{`, ${weekday}`}</span>}
+                        </div>
                     </div>
-                </div>
 
-                <div className={s.data_block}>
-                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M10.0026 5.99967V9.99967L12.6693 11.333M16.6693 9.99967C16.6693 13.6816 13.6845 16.6663 10.0026 16.6663C6.32071 16.6663 3.33594 13.6816 3.33594 9.99967C3.33594 6.31778 6.32071 3.33301 10.0026 3.33301C13.6845 3.33301 16.6693 6.31778 16.6693 9.99967Z"
-                            stroke="#F1F4F8" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
-                    <span className={s.time}>{event.time.slice(0,5)}</span>
-                    <span className={s.time_zone}>{event.time_zone}</span>
-                </div>
+                    <div className={s.data_block}>
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M10.0026 5.99967V9.99967L12.6693 11.333M16.6693 9.99967C16.6693 13.6816 13.6845 16.6663 10.0026 16.6663C6.32071 16.6663 3.33594 13.6816 3.33594 9.99967C3.33594 6.31778 6.32071 3.33301 10.0026 3.33301C13.6845 3.33301 16.6693 6.31778 16.6693 9.99967Z"
+                                stroke="#F1F4F8" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                        <div className={s.time_block}>
+                            <span className={s.time}>{event.time.slice(0, 5)}</span>
+                            <span className={s.time_zone}>{event.time_zone}</span>
+                        </div>
+                    </div>
 
-                <div className={s.data_block}>
-                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M16.6693 8.48517C16.6693 13.7882 10.0026 18.3337 10.0026 18.3337C10.0026 18.3337 3.33594 13.7882 3.33594 8.48517C3.33594 6.67688 4.03832 4.94265 5.28856 3.66399C6.5388 2.38533 8.23449 1.66699 10.0026 1.66699C11.7707 1.66699 13.4664 2.38533 14.7166 3.66399C15.9669 4.94265 16.6693 6.67688 16.6693 8.48517Z"
-                            stroke="#F1F4F8" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                        <path
-                            d="M10.0026 10.7579C11.2299 10.7579 12.2248 9.74037 12.2248 8.48517C12.2248 7.22998 11.2299 6.21245 10.0026 6.21245C8.7753 6.21245 7.78038 7.22998 7.78038 8.48517C7.78038 9.74037 8.7753 10.7579 10.0026 10.7579Z"
-                            stroke="#F1F4F8" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
-                    <span className={s.place}>{event.place.join(', ')}</span>
+                    <div className={s.data_block}>
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M16.6693 8.48517C16.6693 13.7882 10.0026 18.3337 10.0026 18.3337C10.0026 18.3337 3.33594 13.7882 3.33594 8.48517C3.33594 6.67688 4.03832 4.94265 5.28856 3.66399C6.5388 2.38533 8.23449 1.66699 10.0026 1.66699C11.7707 1.66699 13.4664 2.38533 14.7166 3.66399C15.9669 4.94265 16.6693 6.67688 16.6693 8.48517Z"
+                                stroke="#F1F4F8" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                            <path
+                                d="M10.0026 10.7579C11.2299 10.7579 12.2248 9.74037 12.2248 8.48517C12.2248 7.22998 11.2299 6.21245 10.0026 6.21245C8.7753 6.21245 7.78038 7.22998 7.78038 8.48517C7.78038 9.74037 8.7753 10.7579 10.0026 10.7579Z"
+                                stroke="#F1F4F8" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                        <span className={s.place}>{event.place.join(', ')}</span>
+                    </div>
                 </div>
             </div>
 
@@ -210,7 +214,16 @@ ${event.description?.trim() || ''}
 
             <div className={s.description_block}>
                 <span className={s.title}>О мероприятии</span>
-                <p className={s.description}>{event.description}</p>
+                <p className={s.description}>
+                    {event.description.split('\n').map((line, index) => (
+                        <React.Fragment key={index}>
+                            {line}
+                            <br/>
+                        </React.Fragment>
+                    ))}
+                </p>
+
+
             </div>
 
             <footer className={s.footer}>
@@ -222,7 +235,7 @@ ${event.description?.trim() || ''}
                     </svg>
                 </button>
                 <a href={event.link_event} target={"_blank"} className={s.right}>
-                    <span className={s.text}>Открыть событие</span>
+                    <span className={s.open_event}>Открыть событие</span>
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
                             d="M9.53809 3.875C9.94694 3.875 10.2792 4.2064 10.2793 4.61523C10.2793 5.02413 9.94699 5.35547 9.53809 5.35547H7.4873C6.31016 5.35547 5.35547 6.31016 5.35547 7.4873V16.5127C5.35547 17.6899 6.31016 18.6445 7.4873 18.6445H16.5127C17.6899 18.6445 18.6445 17.6899 18.6445 16.5127V14.4619C18.6445 14.053 18.9759 13.7207 19.3848 13.7207C19.7936 13.7208 20.125 14.0531 20.125 14.4619V16.5127C20.125 18.5076 18.5076 20.125 16.5127 20.125H7.4873C5.49235 20.125 3.875 18.5076 3.875 16.5127V7.4873C3.875 5.49235 5.49235 3.875 7.4873 3.875H9.53809ZM18.9746 3.875C19.6099 3.87513 20.1249 4.39011 20.125 5.02539V10.3594C20.1248 10.768 19.7935 11.0995 19.3848 11.0996C18.976 11.0996 18.6447 10.7681 18.6445 10.3594V6.40234L12.1133 12.9336C11.8421 13.2048 11.4129 13.2219 11.1221 12.9844L11.0664 12.9336C10.7773 12.6444 10.7773 12.1759 11.0664 11.8867L17.5977 5.35547H13.6406C13.2319 5.35525 12.9004 5.024 12.9004 4.61523C12.9005 4.20654 13.232 3.87522 13.6406 3.875H18.9746Z"

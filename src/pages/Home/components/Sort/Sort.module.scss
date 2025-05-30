@@ -1,6 +1,6 @@
 .container {
   position: fixed;
-  top: env(safe-area-inset-top);
+  top: calc(env(safe-area-inset-top) + 45px);
   left: 0;
   right: 0;
   z-index: 999;
@@ -23,6 +23,7 @@
       background-color: #292D33;
       border-radius: 12px;
       color: #F1F4F8;
+      font-weight: 500;
 
       &.active {
         background-color: #F1F4F8;

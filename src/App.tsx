@@ -4,10 +4,10 @@ import { Route, Routes } from "react-router-dom";
 
 const App = () => {
 
-    useEffect(() => {
-        let tg = window.Telegram.WebApp;
-        tg.requestFullscreen();
-    }, []);
+    // useEffect(() => {
+    //     const tg = window.Telegram.WebApp;
+    //     tg.requestFullscreen();
+    // }, []);
 
     return (
         <>

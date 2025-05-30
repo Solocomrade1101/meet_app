@@ -1,4 +1,3 @@
-import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import App from "./App";
 import './styles.scss'
@@ -10,7 +9,9 @@ createRoot(document.getElementById('root')!).render(
       <AppStateProvider>
           <EventsProvider>
               <BrowserRouter basename="/meet_app/">
-                  <App />
+                  <div className={"header"}></div>
+                  <App/>
+
               </BrowserRouter>
           </EventsProvider>
       </AppStateProvider>

@@ -1,6 +1,6 @@
 .container {
   position: relative;
-  padding: 12px 0 66px;
+  padding: 50px 0 106px;
 
   .image {
     max-height: 120px;
@@ -13,13 +13,13 @@
     margin-bottom: 12px;
     .info {
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       justify-content: space-between;
       margin-bottom: 16px;
       gap: 8px;
 
       .title {
-        font-size: 20px;
+        font-size: 24px;
         line-height: 24px;
         font-weight: 500;
         color: #F1F4F8;
@@ -30,34 +30,43 @@
       }
     }
 
-    .data_block {
+    .arguments {
       display: flex;
-      gap: 8px;
-      align-items: center;
-      margin-bottom: 12px;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 24px;
 
-      .time_zone {
-        color: #78818F;
-        font-weight: 400;
-        font-size: 16px;
-        line-height: 20px;
-      }
-      &:last-child {
-        margin-bottom: 0;
-      }
+      .data_block {
+        display: flex;
+        gap: 8px;
+        align-items: center;
 
-      .data {
-        font-weight: 400;
-        font-size: 16px;
-        line-height: 20px;
-        .day {
-          color: #F1F4F8;
+        .time_block {
+          display: flex;
+          align-items: center;
+          gap: 4px;
+          .time_zone {
+            color: #78818F;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 20px;
+          }
         }
-        .weekday {
-          color: #78818F;
+
+        .data {
+          font-weight: 400;
+          font-size: 16px;
+          line-height: 20px;
+          .day {
+            color: #F1F4F8;
+          }
+          .weekday {
+            color: #78818F;
+          }
         }
       }
     }
+
   }
 
   .add_calendar {
@@ -103,8 +112,8 @@
     width: calc(100% - 32px);
     display: flex;
     gap: 10px;
-    height: 60px;
-    background-color: #15171A;
+    height: 94px;
+    background: linear-gradient(0deg, #15171A 79.81%, rgba(21, 23, 26, 0) 100%);
 
     .left {
       display: flex;
@@ -126,6 +135,14 @@
       color: #15171A;
       flex-grow: 1;
       height: 52px;
+
+      .open_event {
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 24px;
+        color: #15171A;
+      ;
+      }
 
     }
   }

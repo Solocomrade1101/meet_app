@@ -68,8 +68,6 @@ export const Home: React.FC = () => {
     if (loading || !isDelayOver) return <Loader />;
     if (error) return <ErrorPage/>
 
-    const now = new Date();
-
     const sortedEvents = [...events].sort((a, b) => {
         const dateA = new Date(a.date[0]);
         const dateB = new Date(b.date[0]);
@@ -147,7 +145,7 @@ export const Home: React.FC = () => {
             )}
             <div className={s.last_events}>
                 {pastEvents.slice(0, visiblePastEvents).map((event: IEvent) => {
-                    const {day, weekday} = formatDateParts(event.date)
+                    const {day} = formatDateParts(event.date)
                     return (
                         <div className={s.last_event} key={event.id} onClick={() => navigate(`/event/${event.id}`)}>
                             <span className={s.date}>{day}</span>

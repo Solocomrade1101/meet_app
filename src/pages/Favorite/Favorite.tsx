@@ -48,6 +48,12 @@ export const Favorite: FC = () => {
         }
     };
 
+    useEffect(() => {
+        const img = new Image();
+        img.src = favoriteEmpty;
+    }, []);
+
+
     return (
         <div className={s.container}>
             <span className={s.title}>Избранное</span>
