@@ -114,9 +114,14 @@ export const Home: React.FC = () => {
         event.date.some(date => stripTime(date) >= currentDate)
     );
 
-    const pastEvents = cityFilteredEvents.filter(event =>
-        event.date.every(date => stripTime(date) < currentDate)
-    );
+    const pastEvents = cityFilteredEvents
+        .filter(event => event.date.every(date => stripTime(date) < currentDate))
+        .sort((a, b) => {
+            const dateA = new Date(a.date[0]);
+            const dateB = new Date(b.date[0]);
+            return +dateB - +dateA
+
+        })
 
 
 
