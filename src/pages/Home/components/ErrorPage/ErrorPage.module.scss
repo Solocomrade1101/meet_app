@@ -3,7 +3,8 @@
   flex-direction: column;
   gap: 16px;
   align-items: center;
-  margin-top: 96px;
+  overflow: hidden;
+  padding-top: calc(env(safe-area-inset-top) + 200px);
 
   img {
     width: 128px;

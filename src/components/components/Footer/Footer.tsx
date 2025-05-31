@@ -40,7 +40,11 @@ export const Footer:FC = () => {
                 </button>
             </div>
             {talkOpen && (
-                <div className={s.overlay}>
+                <div className={s.overlay} onClick={(event) => {
+                    if (event.target === event.currentTarget) {
+                        setTalkOpen(false)
+                    }
+                }}>
                     <div className={s.talk}>
                         <div className={s.top}>
                             <span className={s.title}>Предложить событие</span>

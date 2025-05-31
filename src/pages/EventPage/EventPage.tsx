@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import s from './EventPage.module.scss'
 import {formatDateParts} from "../utils";
@@ -32,6 +32,10 @@ export const EventPage: React.FC = () => {
             setFavoriteIds(ids);
         };
         fetchFavorites();
+    }, []);
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
     }, []);
 
 

@@ -1,5 +1,5 @@
 .container {
-  padding-top: 70px;
+  padding-top: calc(env(safe-area-inset-top) + 100px);
   padding-bottom: 60px;
 
   .title {
@@ -66,6 +66,10 @@
         .like {
           flex-shrink: 0;
 
+          .like_icon {
+            width: 24px;
+            height: 24px;
+          }
           &.favorite {
             svg {
               fill: #ED3368
@@ -97,7 +101,7 @@
 }
 .button {
   position: absolute;
-  bottom: 60px;
+  bottom: 92px;
   width: calc(100% - 32px);
   height: 52px;
   border-radius: 14px;

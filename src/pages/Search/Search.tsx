@@ -58,7 +58,7 @@ export const Search:FC = () => {
                 </div>
             </div>
 
-            {filteredEvents.length !== 0  ? (
+            {filteredEvents.length !== 0  && value.length !== 0 && (
                 <div className={s.events}>
                     {filteredEvents.map(item => {
                         const {day, weekday} = formatDateParts(item.date)
@@ -76,7 +76,8 @@ export const Search:FC = () => {
                         )
                     })}
                 </div>
-            ) : (
+            )}
+            {value.length !== 0 && filteredEvents.length === 0 && (
                 <div className={s.empty}>Ничего не найдено</div>
             )}
 
