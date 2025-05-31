@@ -6,3 +6,4 @@ export interface Filters {
     format: FormatType[];
     cities: string[];
 }
+export type FilterType = 'sortOrder' | 'format' | 'cities';

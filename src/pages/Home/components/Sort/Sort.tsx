@@ -1,4 +1,4 @@
-import { type FC, useState } from "react";
+import { type FC } from "react";
 import s from './Sort.module.scss';
 import cn from 'classnames';
 import { SortOpen } from "./components";
@@ -7,8 +7,7 @@ import {useNavigate} from "react-router-dom";
 
 type FilterType = 'sortOrder' | 'format' | 'cities';
 
-export const Sort: FC<ISortProps> = ({ filters, setFilters }) => {
-    const [activeFilter, setActiveFilter] = useState<FilterType | null>(null);
+export const Sort: FC<ISortProps> = ({ filters, setFilters, activeFilter, setActiveFilter }) => {
     const navigate = useNavigate()
 
     const handleOpen = (type: FilterType) => {

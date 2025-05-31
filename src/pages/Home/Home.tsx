@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import s from './Home.module.scss'
 import {Sort} from "./components/Sort";
 import {formatDateParts} from "../utils";
-import type {Filters} from "./Interfaces.ts";
+import type {Filters, FilterType} from "./Interfaces.ts";
 import {useEvents} from "../../EventContext/EventContext";
 import {Footer, Loader} from "../../components";
 import {storage} from "../../utils";
@@ -20,6 +20,7 @@ export const Home: React.FC = () => {
     const [visiblePastEvents, setVisiblePastEvents] = useState(4)
     const [favoriteIds, setFavoriteIds] = useState<string[]>([]);
     const [showScrollTop, setShowScrollTop] = useState(false)
+    const [activeFilter, setActiveFilter] = useState<FilterType | null>(null);
 
     const [filters, setFilters] = useState<Filters>({
         sortOrder: 'Сначала ближайшие',
@@ -127,7 +128,10 @@ export const Home: React.FC = () => {
     return (
         <div className={s.wrapper}>
             <Sort filters={filters}
-                  setFilters={setFilters}/>
+                  setFilters={setFilters}
+                  activeFilter={activeFilter}
+                  setActiveFilter={ setActiveFilter}
+            />
             <div className={s.future_events}>
                 {futureEvents.map((event: IEvent) => (
                     <FutureEvent event={event} key={event.id} isFavorite={favoriteIds.includes(event.id)} onToggleFavorite={() => handleToggleFavorite(event.id)}/>
@@ -169,7 +173,7 @@ export const Home: React.FC = () => {
                 </button>
             )}
 
-            <Footer/>
+            {!activeFilter && <Footer/>}
 
             {showScrollTop && (
                 <button className={s.scroll} onClick={handleScrollTop}>

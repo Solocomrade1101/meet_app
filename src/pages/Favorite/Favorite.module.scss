@@ -1,5 +1,5 @@
 .container {
-  padding-top: calc(env(safe-area-inset-top) + 100px);
+  padding-top: calc(var(--custom-safe-top) + 52px);
   padding-bottom: 60px;
 
   .title {

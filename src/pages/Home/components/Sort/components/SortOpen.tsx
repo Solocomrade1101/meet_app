@@ -139,5 +139,5 @@ export const SortOpen: FC<SortOpenProps> = ({
                 </div>
             </div>
         </div>
-    );
-};
+    )
+}

@@ -3,12 +3,12 @@
 
   .header {
     position: fixed;
-    top: calc(env(safe-area-inset-top) + 88px);
+    top: 0;
+    padding-top: calc(var(--custom-safe-top) + 52px);
     left: 16px;
     right: 16px;
     display: flex;
     align-items: center;
-    height: 76px;
     background-color: #15171A;
     .block {
       width: 100%;

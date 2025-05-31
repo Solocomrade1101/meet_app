@@ -1,6 +1,7 @@
 .container {
   position: relative;
-  padding: calc(env(safe-area-inset-top) + 100px) 0 106px;
+  padding-top: calc(var(--custom-safe-top) + 52px);
+  padding-bottom: calc(var(--custom-safe-bottom) + 92px);
 
   .image {
     max-height: 120px;
@@ -106,14 +107,13 @@
 
   .footer {
     position: fixed;
-    bottom: calc(env(safe-area-inset-top));
+    bottom: -16px;
     left: 16px;
     right: 16px;
     width: calc(100% - 32px);
     display: flex;
     gap: 10px;
-    padding-bottom: 20px;
-    //height: 74px;
+    padding-bottom: 48px;
     background: linear-gradient(0deg, #15171A 79.81%, rgba(21, 23, 26, 0) 100%);
 
     .left {

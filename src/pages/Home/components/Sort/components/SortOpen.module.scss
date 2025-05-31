@@ -1,20 +1,21 @@
 .overlay {
   position: absolute;
-  top: -70px;
+  top: 0;
   left: 0;
-  z-index: 1000;
+  z-index: 100;
   width: 100vw;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.72);
   overflow: hidden;
   touch-action: none;
+  overscroll-behavior: contain;
 
   .container {
     position: absolute;
-    bottom: env(safe-area-inset-bottom);
+    bottom: 0;
     left: 0;
     right: 0;
-    z-index: 10;
+    z-index: 100;
     width: 100%;
     background-color: #15171A;
     border-radius: 24px 24px 0 0 ;
@@ -42,7 +43,7 @@
       }
 
       .items_block {
-        max-height: 88vh;
+        max-height: 60vh;
         overflow: auto;
         margin-bottom: 16px;
         .checkbox_block {
@@ -97,6 +98,7 @@
     }
   }
 }
+
 .customRadio {
   display: flex;
   align-items: center;

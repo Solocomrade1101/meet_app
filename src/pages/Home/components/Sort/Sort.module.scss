@@ -1,14 +1,15 @@
 .container {
   position: fixed;
-  top: calc(env(safe-area-inset-top) + 80px);
+  top: 0;
   left: 0;
   right: 0;
   z-index: 999;
   padding: 16px;
-  height: 60px;
+  padding-top: calc(var(--custom-safe-top) + 52px);
   display: flex;
   align-items: center;
-  background-color: #15171A;
+  background: linear-gradient(180deg, #15171A 79.81%, rgba(21, 23, 26, 0) 100%);
+
 
   .buttons_block {
     display: flex;

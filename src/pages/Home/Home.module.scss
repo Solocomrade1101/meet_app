@@ -1,6 +1,6 @@
 .wrapper {
   padding-bottom: 104px;
-  padding-top: 152px;
+  padding-top: calc(var(--custom-safe-top) + 108px);
 
   .separator {
     width: 100%;
