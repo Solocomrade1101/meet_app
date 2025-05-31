@@ -72,33 +72,60 @@ ${event.link_event}
 
 ${event.description?.trim() || ''}
 
-Все события собраны в нашем мини-апп: https://t.me/Meet_tg_app_bot
+Все события собраны в нашем мини-апп: https://t.me/meetupchik_bot/events
 `.trim();
 
         return message;
     };
 
 
-
     const handleShare = () => {
         const text = formatShareText(event);
 
-        if (navigator.share) {
+        // Проверяем iOS (включая iPad и iPhone)
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+            (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+
+        if (isIOS && navigator.share) {
             navigator.share({
                 title: event.title,
-                text,
+                text: text,
             }).catch((err) => {
                 console.log('Share failed:', err.message);
+                copyToClipboard(text);
             });
         } else {
-            navigator.clipboard.writeText(text).then(() => {
-                alert('Текст скопирован! Можешь вставить в сообщение');
-            });
+            shareViaTelegram(text);
         }
     };
 
+    const copyToClipboard = (text: string) => {
+        navigator.clipboard.writeText(text).then(() => {
+            alert('Текст скопирован! Можешь вставить в сообщение');
+        });
+    };
 
+    const shareViaTelegram = (text: string) => {
+        const lines = text.split('\n');
 
+        const header = lines[0];
+
+        const link = lines[1];
+
+        const restText = lines.slice(2).join('\n');
+
+        const shareText = `${header}\n${link}\n${restText}`;
+
+        const telegramUrl = `https://t.me/share/url?url=${encodeURIComponent(shareText)}`;
+
+        window.open(telegramUrl, '_blank');
+
+        setTimeout(() => {
+            if (!document.hidden) {
+                copyToClipboard(text);
+            }
+        }, 500);
+    };
 
     const handleToggleFavorite = async (event: React.MouseEvent<HTMLButtonElement>, eventId: string) => {
         event.stopPropagation()
