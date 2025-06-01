@@ -78,3 +78,9 @@ button {
   padding-top: env(safe-area-inset-top)
 
 }
+
+button, a {
+  -webkit-tap-highlight-color: transparent;
+  tap-highlight-color: transparent;
+  outline: none;
+}

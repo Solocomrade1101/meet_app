@@ -9,9 +9,7 @@ createRoot(document.getElementById('root')!).render(
       <AppStateProvider>
           <EventsProvider>
               <BrowserRouter basename="/meet_app/">
-                  {/*<div className={"header"}></div>*/}
                   <App/>
-
               </BrowserRouter>
           </EventsProvider>
       </AppStateProvider>
