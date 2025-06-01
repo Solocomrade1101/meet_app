@@ -79,18 +79,19 @@ export const Home: React.FC = () => {
     const formatFilteredEvents = sortedEvents.filter(event => {
         if (filters.format.length === 0) return true;
 
-        const isOnline = event.place.includes("Онлайн");
+        const hasOnline = event.place.includes("Онлайн");
+        const hasOffline = event.place.some(place => place !== "Онлайн");
 
         if (filters.format.includes("Онлайн") && filters.format.includes("Оффлайн")) {
             return true;
         }
 
         if (filters.format.includes("Онлайн")) {
-            return isOnline;
+            return hasOnline;
         }
 
         if (filters.format.includes("Оффлайн")) {
-            return !isOnline;
+            return hasOffline;
         }
 
         return true;
