@@ -27,3 +27,4 @@ dist-ssr
 .env
 .env.*    # если у тебя есть .env.local, .env.production и т. д.
 
+.vercel
