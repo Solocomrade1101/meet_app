@@ -1,0 +1,24 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "vite.config.ts",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "dist"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/meet_app/(.*)",
+      "dest": "/meet_app/index.html"
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/meet_app/_next/static/(.*)",
+      "destination": "/_next/static/$1"
+    }
+  ]
+}
